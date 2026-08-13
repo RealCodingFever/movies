@@ -1,0 +1,50 @@
+/* akgenie movie-chat widget styles. Imported from index.tsx — consumers need nothing. */
+
+@keyframes akg-slide-up {
+  0% { opacity: 0; transform: translateY(16px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes akg-slide-down {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(16px) scale(0.97); }
+}
+@keyframes akg-fade-in {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes akg-reveal-char {
+  from { opacity: 0; filter: blur(3px); transform: translateY(3px); }
+  to   { opacity: 1; filter: blur(0);    transform: translateY(0); }
+}
+@keyframes akg-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+@keyframes akg-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.akg-slide-up   { animation: akg-slide-up 280ms cubic-bezier(0.16,1,0.3,1); }
+.akg-slide-down { animation: akg-slide-down 400ms cubic-bezier(0.16,1,0.3,1) forwards; }
+.akg-fade-in    { animation: akg-fade-in 300ms ease-out forwards; }
+.akg-shimmer    { animation: akg-shimmer 1.8s infinite; }
+.akg-overlay-in { animation: akg-overlay-in 400ms ease-out forwards; }
+
+.akg-scrollbar::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+.akg-scrollbar::-webkit-scrollbar-thumb {
+  background: #2a2a35;
+  border-radius: 999px;
+}
+.akg-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.akg-scrollbar-hide::-webkit-scrollbar { display: none; }
+.akg-scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
