@@ -1,0 +1,348 @@
+/* --- Layout & Overlay --- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-out;
+    padding: 20px; /* Prevents touching edges on mobile */
+    overflow: hidden; /* Clips animations coming from outside viewport */
+}
+
+/* Wrapper holds the card and the megaphones together */
+.wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 550px; /* Controls the size of the central unit */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Tilted Background (The Pink Card) --- */
+.tiltedBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e94560; /* The pink/red color */
+    border-radius: 20px;
+    transform: rotate(-5deg) scale(1);
+    z-index: 1;
+    box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+    animation: bounceIn 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}
+
+/* --- Main Front Card (Dark Theme) --- */
+.card {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    border: 1px solid #333;
+    border-radius: 16px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    animation: bounceIn 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    animation-delay: 0.1s; /* Slight delay so it follows the pink card */
+}
+
+
+/* --- Ribbon & Header --- */
+.ribbonContainer {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    z-index: 5;
+    animation: dropDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.ribbon {
+    background-color: #ffffff;
+    color: #e94560;
+    padding: 10px 30px;
+    font-weight: 900;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    white-space: nowrap;
+    /* Optional: Clip path for ribbon ends if desired, but simple box looks like sticker */
+    transform: skewX(-10deg);
+}
+
+.ribbonText {
+    display: inline-block;
+    transform: skewX(10deg); /* Counter-skew text */
+}
+
+.exSignWrapper {
+    position: absolute;
+    right: -25px;
+    top: -25px;
+    width: 50px;
+    height: 50px;
+    z-index: 6;
+}
+
+.exSign {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+    animation: floatAndPulse 2s ease-in-out infinite;
+}
+
+/* --- Content Body --- */
+.body {
+    text-align: center;
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+
+.message {
+    color: #e0e0e0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* --- Footer --- */
+.footer {
+    padding: 20px 30px 24px 30px;
+    border-top: 1px solid #333; /* The separator line you wanted */
+    display: flex;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2); /* Slight darken for footer area */
+    border-radius: 0 0 16px 16px;
+}
+
+.dismissButton {
+    background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+    position: relative;
+    overflow: hidden;
+}
+
+.dismissButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.dismissButton:hover::before {
+    left: 100%;
+}
+
+.dismissButton.enabled {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+}
+
+.dismissButton.enabled:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(233, 69, 96, 0.6);
+}
+
+.dismissButton.disabled {
+    background: linear-gradient(135deg, #555 0%, #666 100%);
+    cursor: not-allowed;
+    color: #aaa;
+    box-shadow: none;
+}
+
+/* --- Megaphones --- */
+.megaphoneWrapper {
+    position: absolute;
+    top: 50%;
+    width: 160px; /* Fixed width to prevent taking over UI */
+    z-index: 10;
+    pointer-events: none; /* Let clicks pass through if they overlap empty space */
+}
+
+.megaphone {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
+}
+
+.left {
+    left: -100px; /* Pulls it out to the left */
+    transform: translateY(-50%) rotate(-15deg);
+    animation: slideInLeft 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
+               honkLeft 2.5s ease-in-out infinite 1.2s;
+}
+
+.right {
+    right: -100px; /* Pulls it out to the right */
+    transform: translateY(-50%) scaleX(-1) rotate(-15deg); /* Flip & Rotate */
+    animation: slideInRight 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
+               honkRight 2.5s ease-in-out infinite 1.2s;
+}
+
+/* --- Keyframe Animations --- */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3); }
+    50% { opacity: 1; transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+/* Tilted background rotation needs to persist after bounce */
+.tiltedBackground {
+    animation-name: bounceInTilted;
+}
+
+@keyframes bounceInTilted {
+    0% { opacity: 0; transform: rotate(-4deg) scale(0.3); }
+    50% { opacity: 1; transform: rotate(-4deg) scale(1.05); }
+    70% { transform: rotate(-4deg) scale(0.9); }
+    100% { transform: rotate(-4deg) scale(1.02); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes dropDown {
+    from { transform: translate(-50%, -100px) rotate(-10deg); opacity: 0; }
+    to { transform: translate(-50%, 0) rotate(-2deg); opacity: 1; }
+}
+
+@keyframes floatAndPulse {
+    0%, 100% { transform: translateY(0) scale(1) rotate(15deg); }
+    50% { transform: translateY(-8px) scale(1.1) rotate(10deg); }
+}
+
+@keyframes slideInLeft {
+    from { left: -300px; opacity: 0; }
+    to { left: -100px; opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { right: -300px; opacity: 0; }
+    to { right: -100px; opacity: 1; }
+}
+
+/* Honk animations - scaling and slight rotation */
+@keyframes honkLeft {
+    0%, 100% { transform: translateY(-50%) rotate(-15deg) scale(1); }
+    10%, 20% { transform: translateY(-50%) rotate(-20deg) scale(1.15); }
+    30% { transform: translateY(-50%) rotate(-15deg) scale(1); }
+}
+
+@keyframes honkRight {
+    0%, 100% { transform: translateY(-50%) scaleX(-1) rotate(-15deg) scale(1); }
+    10%, 20% { transform: translateY(-50%) scaleX(-1) rotate(-20deg) scale(1.15); }
+    30% { transform: translateY(-50%) scaleX(-1) rotate(-15deg) scale(1); }
+}
+
+/* --- Responsiveness --- */
+
+@media (max-width: 768px) {
+    .wrapper {
+        max-width: 90%;
+    }
+
+    .megaphoneWrapper {
+        width: 100px; /* Smaller megaphones on tablet */
+    }
+    
+    .left { left: -50px; }
+    .right { right: -50px; }
+
+    /* Adjust animations for new positions */
+    @keyframes slideInLeft {
+        from { left: -200px; }
+        to { left: -50px; }
+    }
+    @keyframes slideInRight {
+        from { right: -200px; }
+        to { right: -50px; }
+    }
+
+    .message {
+        font-size: 0.8rem;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .message {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .card {
+        padding-top: 0; /* Reset */
+    }
+
+    .body {
+        padding: 45px 20px 20px 20px;
+    }
+
+    .ribbon {
+        font-size: 1rem;
+        padding: 8px 20px;
+    }
+
+    .exSignWrapper {
+        width: 35px;
+        height: 35px;
+        right: -15px;
+        top: -15px;
+    }
+
+    /* Move megaphones further out or hide partially to show text */
+    .megaphoneWrapper {
+        width: 80px;
+        top: 15%; /* Move them up so they don't block text */
+    }
+
+    .left { left: -25px; }
+    .right { right: -25px; }
+
+    @keyframes slideInLeft { from { left: -100px; } to { left: -25px; } }
+    @keyframes slideInRight { from { right: -100px; } to { right: -25px; } }
+
+    .footer{
+        padding: 1rem
+    }
+
+    .dismissButton{
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}
